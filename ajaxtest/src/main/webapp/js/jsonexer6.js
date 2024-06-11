@@ -24,7 +24,7 @@ window.onload = function(){
 			const xhr = new XMLHttpRequest();
 			xhr.open("POST", "http://localhost:8888/ajaxtest/score.jsp", true);
 			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-			xhr.send();
+			xhr.send(`name=${s1name}&age=${s1kor}`);
 			xhr.onreadystatechange = function(){
 				if(xhr.readyState == 4 && xhr.status == 200){
 					const jsonText = xhr.responseText;
