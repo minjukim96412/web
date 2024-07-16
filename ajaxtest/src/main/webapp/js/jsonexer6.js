@@ -26,7 +26,7 @@ window.onload = function() {
 		
 		console.log("params: ", params); // 디버깅용 로그
 		const xhr = new XMLHttpRequest();
-		xhr.open("POST", "http://localhost:8888/ajaxtest/score.jsp", true);
+		xhr.open("POST", "http://localhost:8888/score.jsp", true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.send(params);
 		

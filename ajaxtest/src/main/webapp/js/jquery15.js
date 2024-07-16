@@ -21,9 +21,12 @@
 
 */
 $(function(){
+
+    fetchPosts(); // 페이지 로드 시 포스트를 불러옵니다.
+});
 	
     function addPostRow(post, postTable) {
-        const row = $("<tr></tr>");
+       const row = $("<tr></tr>");
         row.append($("<td>"+ post.id +"</td>"));
         row.append($("<td>"+ post.title +"</td>"));
         if (post.thumbnail) {
@@ -31,13 +34,16 @@ $(function(){
             row.append($("<td>").append(thumbnailImg));
         } 
         row.append($("<td>"+ post.status +"</td>"));
-        row.append($("<td>"+ post.category +"</td>"));
-        const publishedStr = moment(post.publishedAt, "DD/MM/YYYY HH:mm:ss").format("YY/MM/DD HH:mm");
-        row.append($("<td>"+ publishedStr +"</td>"));
-        const updatedStr = moment(post.updatedAt, "DD/MM/YYYY HH:mm:ss").format("YY/MM/DD HH:mm");
-        row.append($("<td>"+ updatedStr +"</td>"));
+        row.append($("<td>"+ post.category +"</td>"));  
+        row.append($("<td>"+ getDateStr(post.publishedAt) +"</td>"));
+        row.append($("<td>"+ getDateStr(post.updatedAt) +"</td>"));
         postTable.append(row);
     }
+
+	//게시일/수정일 출력형식을 변경하는 기능
+	function getDateStr(str){
+		return moment(str, "DD/MM/YYYY HH:mm:ss").format("YY/MM/DD HH:mm");
+	}
 
     function fetchPosts() {
         $.ajax({
@@ -97,8 +103,6 @@ $(function(){
         });
     }
 
-    fetchPosts(); // 페이지 로드 시 포스트를 불러옵니다.
-});
 
 
 /*
