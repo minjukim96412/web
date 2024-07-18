@@ -9,12 +9,12 @@
 <body>
 	<h2>메인페이지</h2>
 	<h3>
-		<%=session.getAttribute("uname") %>님
-		(<%=session.getAttribute("uid") %>)
-		<%=session.getAttribute("ucount") %> 번째 방문자
+		<%=session.getAttribute("uname")%>님
+		(<%=session.getAttribute("uid")%>)
+		<%=session.getAttribute("ucount") %>번째 방문을 환영합니다
 	</h3>
 	<p>
-		<button onclick="location.href='logout.jsp'">로그아웃</button>
+		<button onclick="location.href='logout.jsp';">로그아웃</button>
 	</p>
 </body>
 </html>
