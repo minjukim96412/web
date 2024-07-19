@@ -13,7 +13,8 @@ ${false}<br />
 
 <%
 	pageContext.setAttribute("score", new int[]{90, 100, 70});
-%>           
+%>
+         
 ${score[1]}<br />
 ${pageScope.score[1]}<br />
 
