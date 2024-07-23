@@ -19,7 +19,7 @@
 <body>
 	<div id="wrapper">
 	<h2>게시물 수정</h2>
-	<form method="post" action="boardUpdateProc.jsp">
+	<form method="post" action="boardUpdateProc.jsp" enctype="multipart/form-data">
 		<input type="hidden" name="bid" value="${board.bid}"/>
 		분류 : <select name="bsort">
 				<option value="자유" <c:if test="${board.bsort=='자유'}">selected</c:if>>자유</option>
@@ -28,6 +28,8 @@
 			</select><br />
 		제목 : <input type="text" name="btitle" value="${board.btitle}" /><br />
 		내용 : <textarea name="bcontent" rows="25" >${board.bcontent}</textarea><br />
+		첨부파일 : ${board.cfn}
+				<input type="file" name="cfn" value="${board.cfn}" /><br />
 		<input type="submit" value="확인" />
 	</form>
 </div>

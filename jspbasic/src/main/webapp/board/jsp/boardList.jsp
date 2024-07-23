@@ -1,3 +1,6 @@
+<%@page import="jspbasic.listener.MyHttpSessionListener"%>
+<%@page import="javax.websocket.Session"%>
+<%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="jspbasic.board.BoardDao"%>
@@ -5,17 +8,6 @@
 <%@page import="jspbasic.board.Board"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<%
-    request.setCharacterEncoding("utf-8");
-    String bsort = request.getParameter("bsort");
-    String searchKeyword = request.getParameter("searchKeyword");
-    String searchValue = request.getParameter("searchValue");
-
-    BoardInterface bi = new BoardDao();
-    List<Board> boardList = bi.listBoard(bsort, searchKeyword, searchValue);
-    request.setAttribute("boardList", boardList);
-%>
 
 <!DOCTYPE html>
 <html>
@@ -28,6 +20,7 @@
     <div id="wrapper">
         <div>
             <h2>게시판</h2>
+            <p>현재 접속자 수 :  ${applicationScope.userCount} 명</p>
             <p>
                 ${sessionScope.mid} 님 환영합니다! &nbsp;
                 <input type="button" value="로그아웃" onclick="location.href='logoutProc.jsp'" />
@@ -72,10 +65,19 @@
                         <td>${board.bcount}</td>
                         <td><fmt:formatDate value="${board.bregdate}" pattern="yy/MM/dd HH:mm:ss" /> </td>
                         <td>
-                            <a href="boardUpdateForm.jsp?bid=${board.bid}">[수정]</a>
+                       	 	<c:if test="${!empty board.cfn}">
+                        	<a href="/jspbasic/filedownload?filename=${board.cfn}"><img src="/board/file.png" style="width : 25px;" /></a>
+                        	</c:if>
                         </td>
                         <td>
+                        	<c:if test="${board.bwriter == sessionScope.mid or sessionScope.mid == 'master'}">
+                            <a href="boardUpdateForm.jsp?bid=${board.bid}">[수정]</a>
+                            </c:if>
+                        </td>
+                        <td>
+                        	<c:if test="${board.bwriter == sessionScope.mid or sessionScope.mid == 'master'}">
                             <a href="boardDeleteProc.jsp?bid=${board.bid}">[삭제]</a>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>

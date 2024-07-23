@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import jspbasic.product.ConnectionUtil;
 
@@ -17,70 +19,63 @@ public class BoardDao implements BoardInterface{
 	ResultSet rs;
 
 	@Override
-	public List<Board> listBoard(String bsort, String searchKeyword, String searchValue) throws SQLException {
-		if (bsort == null) bsort = "";
-        if (searchValue == null) searchValue = "";
-        if (searchKeyword == null) searchKeyword = "";
-
-        conn = ConnectionUtil.getConnection();
-        String sql = "SELECT * FROM board WHERE 1=1 ";
-        
-        if (bsort != null && !bsort.isEmpty()) {
-            sql += "AND bsort = ? ";
-        }
-        
-        if (searchKeyword.equals("btitle")) {
-            sql += "AND btitle LIKE ? ";
-        } else if (searchKeyword.equals("bcontent")) {
-            sql += "AND bcontent LIKE ? ";
-        } else if (searchKeyword.isEmpty()) {
-            sql += "AND (btitle LIKE ? OR bcontent LIKE ?) ";
-        }
-        
-        sql += "ORDER BY bid DESC";
-        
-        pstmt = conn.prepareStatement(sql);
-        
-        int paramIndex = 1;
-        
-        if (bsort != null && !bsort.isEmpty()) {
-            pstmt.setString(paramIndex++, bsort);
-        }
-        
-        if (searchKeyword.equals("btitle") || searchKeyword.equals("bcontent")) {
-            pstmt.setString(paramIndex++, "%" + searchValue + "%");
-        } else if (searchKeyword.isEmpty()) {
-            pstmt.setString(paramIndex++, "%" + searchValue + "%");
-            pstmt.setString(paramIndex++, "%" + searchValue + "%");
-        }
-
-        rs = pstmt.executeQuery();
-        List<Board> boardList = new ArrayList<>();
-        while (rs.next()) {
-            Board board = new Board();
-            board.setBid(rs.getInt("bid"));
-            board.setBsort(rs.getString("bsort"));
-            board.setBtitle(rs.getString("btitle"));
-            board.setBcontent(rs.getString("bcontent"));
-            board.setBwriter(rs.getString("bwriter"));
-            board.setBcount(rs.getInt("bcount"));
-            board.setBregdate(rs.getTimestamp("bregdate"));
-            boardList.add(board);
-        }
-        ConnectionUtil.closeConnection(conn);
-        return boardList;
-    }
+	public List<Board> listBoard(String bsort, String searchKeyword, String searchValue) 
+			throws SQLException {
+		
+		if (bsort==null) bsort = "";
+		if (searchKeyword==null) searchKeyword = "";
+		if (searchValue==null) searchValue = "";
+		
+		conn = ConnectionUtil.getConnection();
+		
+		String sql = " SELECT * FROM BOARD ";
+		if (searchKeyword.equals("btitle")) {
+			sql += " WHERE BTITLE LIKE '%" + searchValue + "%' ";
+		} else if (searchKeyword.equals("bcontent")) {
+			sql += " WHERE BCONTENT LIKE '%" + searchValue + "%' ";
+		} else if (searchKeyword.equals("")) {
+			sql += " WHERE (BTITLE LIKE '%" + searchValue + "%' ";
+			sql += " OR BCONTENT LIKE '%" + searchValue + "%') ";
+		}
+		
+		if (!bsort.equals("")) {
+			sql += " AND BSORT='" + bsort + "' ";
+		}
+		
+		sql += " ORDER BY BID DESC ";
+		
+		pstmt = conn.prepareStatement(sql);
+		rs = pstmt.executeQuery();
+		if (rs!=null) {
+			List<Board> boardList = new ArrayList<Board>();
+			while (rs.next()) {
+				Board board = new Board();
+				board.setBid(rs.getInt("BID"));
+				board.setBtitle(rs.getString("BTITLE"));
+				board.setBcontent(rs.getString("BCONTENT"));
+				board.setBwriter(rs.getString("BWRITER"));
+				board.setBcount(rs.getInt("BCOUNT"));
+				board.setBregdate(rs.getTimestamp("BREGDATE"));
+				board.setBsort(rs.getString("BSORT"));
+				board.setCfn(rs.getString("CFN"));
+				boardList.add(board);
+			}
+			return boardList;
+		} else {
+			return Collections.emptyList();
+		}
+	}
 
 	@Override
 	public int registBoard(Board board) throws SQLException {
 		conn = ConnectionUtil.getConnection();
-		String sql = " insert into board values (seq_board.nextval,?,?,?,0,?,?) ";
+		String sql = " insert into board values (seq_board.nextval,?,?,?,0,sysdate,?,?) ";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, board.getBtitle());
 		pstmt.setString(2, board.getBcontent());
 		pstmt.setString(3, board.getBwriter());
-		pstmt.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
-		pstmt.setString(5, board.getBsort());
+		pstmt.setString(4, board.getBsort());
+		pstmt.setString(5, board.getCfn());
 		int result = pstmt.executeUpdate();
 		ConnectionUtil.closeConnection(conn);
 		return result;
@@ -89,13 +84,14 @@ public class BoardDao implements BoardInterface{
 	@Override
 	public int updateBoard(Board board) throws SQLException {
 		conn = ConnectionUtil.getConnection();
-		String sql = " update board set bsort=?, btitle=?, bcontent=?, bregdate=? where bid=? ";
+		String sql = " update board set bsort=?, btitle=?, bcontent=?, bregdate=?, cfn=?  where bid=? ";
 		pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, board.getBsort());
 		pstmt.setString(2, board.getBtitle());
 		pstmt.setString(3, board.getBcontent());
 		pstmt.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
-		pstmt.setInt(5, board.getBid());
+		pstmt.setString(5, board.getCfn());
+		pstmt.setInt(6, board.getBid());
 		int result = pstmt.executeUpdate();
 		ConnectionUtil.closeConnection(conn);
 		return result;
@@ -129,9 +125,8 @@ public class BoardDao implements BoardInterface{
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, bid);
 			rs = pstmt.executeQuery();
-			Board board = null;
 			if(rs!=null) {
-				List<Board> boardList = new ArrayList<Board>();
+				Board board = null;
 				while(rs.next()) {
 					board = new Board();
 					board.setBid(rs.getInt("bid"));
@@ -141,12 +136,12 @@ public class BoardDao implements BoardInterface{
 					board.setBcount(rs.getInt("bcount"));
 					board.setBregdate(rs.getTimestamp("bregdate"));
 					board.setBsort(rs.getString("bsort"));
-					boardList.add(board);
+					board.setCfn(rs.getString("cfn"));
 				}
 				ConnectionUtil.closeConnection(conn);
 				return board;
 			}
-			return board;
+			return null;
 	}
 
 }

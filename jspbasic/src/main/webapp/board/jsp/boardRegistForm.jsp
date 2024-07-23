@@ -9,7 +9,7 @@
 </head>
 <body>
 <div id="wrapper">
-		<form method="post" action="boardRegistProc.jsp">
+		<form action="boardRegistProc.jsp" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="bwriter" value="${sessionScope.mid}" />
 			분류 : <select name="bsort">
 				<option value="자유" >자유</option>
@@ -18,8 +18,10 @@
 			</select>
 			제목 : <input type="text" name="btitle" /><br />
 			내용 : <textarea name="bcontent" rows="25" cols="100" ></textarea><br />
-			<input type="submit" value="확인" />
+			첨부파일 : <input type="file" name="cfn"/><br />
+			<input type="submit" value="등록" />
 		</form>
+		<p><input type="button" value="목록" onclick="location.href='boardListProc.jsp';"/></p>
 </div>
 </body>
 </html>
