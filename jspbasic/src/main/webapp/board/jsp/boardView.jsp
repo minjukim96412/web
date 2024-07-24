@@ -61,26 +61,26 @@
     </section>
     <section id="comments">
         <h3>댓글</h3>
-        <c:forEach var="reply" items="${replyList}">
+        <c:forEach var="reply" items="${replyList}" varStatus="status">
             <div class="comment" id="replyNum${reply.rid}">
                 <p>
-                    ${reply.rid} - ${reply.mid}: ${reply.rcontent}
+                    ${status.index + 1} - ${reply.mid}: ${reply.rcontent}
                 </p>
-                <div>
-                	<c:if test="${reply.mid == sessionScope.mid or sessionScope.mid == 'master'}">
-	                    <form method="post" action="updateReply.jsp" style="display:inline;">
-	                        <input type="hidden" name="rid" value="${reply.rid}" />
-	                        <input type="hidden" name="bid" value="${board.bid}" />
-	                        <input type="text" name="rcontent" value="${reply.rcontent}" required/>
-	                        <input type="submit" value="수정" />
-	                    </form>
+                <div class="commentInner">
+                    <c:if test="${reply.mid == sessionScope.mid or sessionScope.mid == 'master'}">
+                        <form method="post" action="updateReply.jsp" class="inline-form">
+                            <input type="hidden" name="rid" value="${reply.rid}" />
+                            <input type="hidden" name="bid" value="${board.bid}" />
+                            <input type="text" name="rcontent" value="${reply.rcontent}" required/>
+                            <input type="submit" value="수정" />
+                        </form>
                     </c:if>
                     <c:if test="${reply.mid == sessionScope.mid or sessionScope.mid == 'master'}">
-	                    <form method="post" action="deleteReply.jsp" style="display:inline;">
-	                        <input type="hidden" name="rid" value="${reply.rid}" />
-	                        <input type="hidden" name="bid" value="${board.bid}" />
-	                        <input type="submit" value="삭제" />
-	                    </form>
+                        <form method="post" action="deleteReply.jsp" class="inline-form">
+                            <input type="hidden" name="rid" value="${reply.rid}" />
+                            <input type="hidden" name="bid" value="${board.bid}" />
+                            <input type="submit" value="삭제" />
+                        </form>
                     </c:if>
                 </div>
             </div>
@@ -95,6 +95,9 @@
 </div>
 </body>
 </html>
+
+
+
 
 
 

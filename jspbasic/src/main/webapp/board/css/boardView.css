@@ -38,99 +38,74 @@ h3 {
     color: #555;
 }
 
-/* Styling for comments section */
-#comments {
-    margin-top: 20px;
-}
-
-#comments h3 {
-    margin-bottom: 10px;
-    color: #333;
-}
-
 .comment {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     padding: 10px;
-    background: #f1f1f1;
     border: 1px solid #ddd;
     border-radius: 5px;
     margin-bottom: 10px;
+    background-color: #fff;
 }
 
 .comment p {
     margin: 0;
-    color: #555;
 }
 
-.comment form {
-    display: inline;
+.commentInner {
+    margin-top: 10px;
 }
 
-.comment form input[type="text"] {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+.inline-form {
+    display: block;
+    margin-top: 5px;
 }
 
-.comment form input[type="submit"] {
-    padding: 5px 10px;
-    background: #28a745;
-    color: #fff;
+.inline-form input[type="text"] {
+    width: calc(100% - 120px);
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.inline-form input[type="submit"] {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
     border: none;
-    border-radius: 3px;
+    border-radius: 5px;
     cursor: pointer;
-    margin-left: 5px;
 }
 
-.comment form input[type="submit"]:hover {
-    background: #218838;
+.inline-form input[type="submit"]:hover {
+    background-color: #0056b3;
 }
 
-.comment form input[type="submit"][value="삭제"] {
-    background: #dc3545;
-}
-
-.comment form input[type="submit"][value="삭제"]:hover {
-    background: #c82333;
-}
-
-/* Styling for new comment form */
 #new-comment-form {
     margin-top: 20px;
 }
 
 #new-comment-form input[type="text"] {
-    width: 80%;
+    width: calc(100% - 120px);
     padding: 10px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
 }
 
 #new-comment-form input[type="submit"] {
-    padding: 10px 15px;
-    background: #007bff;
-    color: #fff;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
     border: none;
-    border-radius: 3px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
 #new-comment-form input[type="submit"]:hover {
-    background: #0056b3;
+    background-color: #218838;
 }
 
-input[type="button"] {
-    padding: 10px 15px;
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
 
-input[type="button"]:hover {
-    background: #0056b3;
-}
+
+
+
