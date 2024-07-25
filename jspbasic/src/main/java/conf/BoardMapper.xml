@@ -1,43 +1,67 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
 
-<mapper namespace="Board">
-    <resultMap id="BoardResult" type="Board">
-        <id property="bid" column="bid"/>
-        <result property="btitle" column="btitle"/>
-        <result property="bwriter" column="bwriter"/>
-        <result property="bcount" column="bcount"/>
-        <result property="bregdate" column="bregdate"/>
-        <result property="bsort" column="bsort"/>
-        <result property="cfn" column="cfn"/>
-    </resultMap>
-    
-    <insert id="insertBoard" parameterType="Board">
-        INSERT INTO board (bid, btitle, bcontent, bwriter, bcount, bregdate, bsort, cfn)
-        VALUES (seq_board.NEXTVAL, #{btitle}, #{bcontent}, #{bwriter}, #{bcount}, SYSDATE, #{bsort}, #{cfn, jdbcType=VARCHAR})
-    </insert>
-    
-    <delete id="deleteBoard" parameterType="int">
-        DELETE FROM board WHERE bid = #{bid}
-    </delete>
-    
-    <update id="updateBoard" parameterType="Board">
-        UPDATE board
-        SET bsort = #{bsort}, btitle = #{btitle}, bcontent = #{bcontent}, bregdate = sysdate, cfn = #{cfn}
-        WHERE bid = #{bid}
-    </update>
-    
-    <select id="selectAllBoard" resultMap="BoardResult">
-        SELECT * FROM board ORDER BY bid DESC
-    </select>
-    
-    <select id="getBoard" parameterType="int" resultType="Board">
-        SELECT * FROM board WHERE bid = #{bid}
-    </select>
-    
-    <update id="addCount" parameterType="int">
-        UPDATE board SET bcount = bcount + 1 WHERE bid = #{bid}
-    </update>
+	<insert id="registBoard" parameterType="Board">
+		insert into board(bid, btitle, bcontent, bwriter, bcount, bregdate, bsort, cfn)
+		values(seq_board.nextval, #{btitle}, #{bcontent}, #{bwriter}, 0, sysdate, #{bsort}, #{cfn})
+	</insert>
+
+	<select id="selectBoard" parameterType="Search" resultType="Board">
+    select * 
+    from board
+    where 1=1
+    <if test="bsort != null and bsort != ''">
+        and bsort = #{bsort}
+    </if>
+    <if test="searchKeyword != null and searchKeyword == 'btitle'">
+        and btitle like '%' || #{searchValue} || '%'
+    </if>
+    <if test="searchKeyword != null and searchKeyword == 'bcontent'">
+        and bcontent like '%' || #{searchValue} || '%'
+    </if>
+    <if test="searchKeyword != null and (searchKeyword != 'btitle' and searchKeyword != 'bcontent')">
+        and (btitle like '%' || #{searchValue} || '%' or bcontent like '%' || #{searchValue} || '%')
+    </if>
+    <if test="searchKeyword == null or searchKeyword == ''">
+        -- When no search keyword is specified, include both title and content
+        and (btitle like '%' || #{searchValue} || '%' or bcontent like '%' || #{searchValue} || '%')
+    </if>
+    order by bid desc
+	</select>
+
+	
+	<delete id="deleteBoard" parameterType="int">
+		delete from board
+		where bid = #{bid}
+	</delete>
+	
+	<update id="updateBoard" parameterType="Board">
+		update board
+			set btitle=#{btitle}, bcontent=#{bcontent}, bsort=#{bsort}, cfn=#{cfn}
+		where bid=#{bid}
+	</update>
+	
+	<select id="getBoard" parameterType="int" resultType="Board">
+		select *
+		from board
+		where bid = #{bid}
+	</select>
+	
+	<update id="addCount" parameterType="int">
+		update board
+		set bcount = bcount + 1
+		where bid = #{bid}
+	</update>
+	
 </mapper>
+
+
+
+
+
+
+
+
+
+

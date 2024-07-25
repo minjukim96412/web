@@ -7,6 +7,7 @@
     <properties resource="conf/db.properties"/>
     <typeAliases>
         <typeAlias type="jspbasic.board.Board" alias="Board"/>
+        <typeAlias type="jspbasic.board.Search" alias="Search" />
         <typeAlias type="jspbasic.member.Member" alias="Member"/>
     </typeAliases>
     <environments default="development">

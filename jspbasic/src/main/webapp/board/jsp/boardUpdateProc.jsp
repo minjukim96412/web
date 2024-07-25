@@ -1,8 +1,3 @@
-<%@page import="org.apache.ibatis.session.SqlSessionFactoryBuilder"%>
-<%@page import="org.apache.ibatis.session.SqlSessionFactory"%>
-<%@page import="org.apache.ibatis.io.Resources"%>
-<%@page import="org.apache.ibatis.session.SqlSession"%>
-<%@page import="java.io.Reader"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="java.io.File"%>
@@ -21,11 +16,7 @@
 	File file = new File(realpath + "/" + mr.getParameter("cfn"));
 	if(file.exists())file.delete();
 %>
-<%
-    String resource = "conf/configuration.xml";
-    Reader reader = null;
-    SqlSession sqlSession = null;
-%>
+
 <jsp:useBean id="board" class="jspbasic.board.Board" />
 <jsp:setProperty name="board" property="bid" value='<%=Integer.parseInt(mr.getParameter("bid")) %>' />
 <jsp:setProperty name="board" property="bsort" value='<%=mr.getParameter("bsort") %>' />
@@ -34,28 +25,13 @@
 <jsp:setProperty name="board" property="cfn" value='<%=mr.getOriginalFileName("cfn") %>' />
 
 <%
-	try {
-	    reader = Resources.getResourceAsReader(resource);
-	    SqlSessionFactory ssf = new SqlSessionFactoryBuilder().build(reader);
-	    sqlSession = ssf.openSession();
-	
-	    int result = sqlSession.update("Board.updateBoard", board);
-	    sqlSession.commit(); // 트랜잭션 커밋
-	
-	    if (result > 0) {
-	    	response.sendRedirect("boardListProc.jsp");
-	    } else {
-	        out.println("등록 실패!");
-	    }
-	} catch (Exception e) {
-	    e.printStackTrace();
-	} finally {
-	    if (sqlSession != null) {
-	        sqlSession.close();
-	    }
-	    if (reader != null) {
-	        reader.close();
-	    }
+	System.out.println(board);
+	BoardInterface bi = new BoardDao();
+	int result = bi.updateBoard(board);
+	if (result > 0) {
+		System.out.println("수정 성공!");
+	} else {
+		System.out.println("수정 실패!");
 	}
-	
+	response.sendRedirect("boardListProc.jsp");
 %>
