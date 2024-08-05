@@ -1,0 +1,111 @@
+/* General styling for the page */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper {
+    width: 80%;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+#content {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+
+h3 {
+    margin-top: 0;
+    color: #555;
+}
+
+.comment {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+
+.comment p {
+    margin: 0;
+}
+
+.commentInner {
+    margin-top: 10px;
+}
+
+.inline-form {
+    display: block;
+    margin-top: 5px;
+}
+
+.inline-form input[type="text"] {
+    width: calc(100% - 120px);
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.inline-form input[type="submit"] {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.inline-form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#new-comment-form {
+    margin-top: 20px;
+}
+
+#new-comment-form input[type="text"] {
+    width: calc(100% - 120px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#new-comment-form input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#new-comment-form input[type="submit"]:hover {
+    background-color: #218838;
+}
+
+
+
+
+

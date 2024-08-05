@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="board_mybatis">
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <dependent-module archiveName="ojdbc6-11.2.0.4.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/ojdbc6-11.2.0.4/ojdbc6-11.2.0.4">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mybatis-3.5.16.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/mybatis-3.5.16/mybatis-3.5.16">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jstl-1.2.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/jstl-1.2/jstl-1.2">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="cos-05Nov2002.jar" deploy-path="/WEB-INF/lib/" handle="module:/resource/cos-05Nov2002/cos-05Nov2002">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="board_mybatis"/>
+        <property name="java-output-path" value="/board_mybatis/build/classes"/>
+    </wb-module>
+</project-modules>

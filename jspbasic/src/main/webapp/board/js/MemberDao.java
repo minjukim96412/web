@@ -79,22 +79,3 @@ public class MemberDao implements MemberInterface {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

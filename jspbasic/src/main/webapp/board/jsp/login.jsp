@@ -17,7 +17,6 @@
                 <input type="submit" value="로그인" />
             </form>
         </div>
-
         <p>
         <button id="joinBtn" onclick="location.href='join.jsp';">회원가입</button>
         </p>
