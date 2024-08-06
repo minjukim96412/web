@@ -1,4 +1,4 @@
-package catshap.butler.filtter;
+package catshap.butler.filter;
 
 import java.io.IOException;
 

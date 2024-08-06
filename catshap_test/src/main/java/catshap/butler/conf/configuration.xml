@@ -3,7 +3,7 @@
 <configuration>
 	<properties resource="catshap/butler/conf/db.properties" />
 	<typeAliases>
-		<typeAlias type="catshap.bean.Users" alias="Users" />
+		<typeAlias type="catshap.butler.bean.Users" alias="Users" />
 	</typeAliases>	
 	<environments default="development">
 		<environment id="development">

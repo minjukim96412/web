@@ -1,4 +1,4 @@
-package catshap.dao;
+package catshap.butler.dao;
 
 import java.io.Reader;
 import java.sql.SQLException;
@@ -9,8 +9,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import catshap.bean.Users;
-import catshap.interfacies.UsersInterface;
+import catshap.butler.bean.Users;
+import catshap.butler.interfacies.UsersInterface;
+
+
+
 
 public class UsersDao implements UsersInterface{
 

@@ -1,4 +1,4 @@
-package catshap.bean;
+package catshap.butler.bean;
 
 import java.sql.Timestamp;
 

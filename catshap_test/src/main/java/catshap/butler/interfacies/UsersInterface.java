@@ -1,9 +1,11 @@
-package catshap.interfacies;
+package catshap.butler.interfacies;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import catshap.bean.Users;
+import catshap.butler.bean.Users;
+
+
 
 public interface UsersInterface {
 	
